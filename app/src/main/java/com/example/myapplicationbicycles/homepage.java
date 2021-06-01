@@ -2,14 +2,17 @@ package com.example.myapplicationbicycles;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.FragmentActivity;
 
+import android.Manifest;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -20,20 +23,36 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+
+import java.util.ArrayList;
 
 public class homepage extends FragmentActivity implements OnMapReadyCallback{
 
     //initialize variables
+    //private AppBarConfiguration mAppBarConfiguration;
     DrawerLayout drawerLayout;
     //initialize variable for map
 
+    FusedLocationProviderClient fusedLocationProviderClient;
+    SupportMapFragment mapFrag;
+    // SearchView searchview;
+    private static final int LOCATION_PERMISSION_REQUEST_CODE = 1;
+    private boolean permissionDenied = false;
     GoogleMap map;
+    ArrayList<LatLng> arrayList=new ArrayList<LatLng>();
+    LatLng nai = new LatLng(-1.2921,36.8219);
+    LatLng muranga = new LatLng(-0.7839, 37.04);
+    LatLng karatina = new LatLng(-0.4832, 37.1274);
+    LatLng nyeri = new LatLng(-0.412284,36.950513);
+    ArrayList<String> title= new ArrayList<String>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,26 +60,125 @@ public class homepage extends FragmentActivity implements OnMapReadyCallback{
         setContentView(R.layout.activity_homepage);
 
         //assign variables
-        drawerLayout=findViewById(R.id.drawer_layout);
+        //drawerLayout=findViewById(R.id.drawer_layout);
 
-        //assign variable of map
-        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
-        mapFragment.getMapAsync(this);
+        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
+
+
+        drawerLayout = findViewById(R.id.drawer_layout);
+
+        mapFrag = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
+
+        // checkMyPermissions();
+        initMap();
     }
-    //menu
+    @Override
 
-        @Override
-        public void onMapReady(GoogleMap googleMap){
-            map = googleMap;
-            LatLng nai = new LatLng(1.2921, 36.8219);
-            map.addMarker(new MarkerOptions().position(nai).title("Nairobi"));
-            map.moveCamera(CameraUpdateFactory.newLatLng(nai));
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu2, menu);
+        return true;
+    }
+
+    private void initMap() {
+        mapFrag = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
+        mapFrag.getMapAsync(this);
+        arrayList.add(muranga);
+        arrayList.add(karatina);
+        arrayList.add(nai);
+        arrayList.add(nyeri);
+
+        //adding titles
+        title.add("muranga");
+        title.add("karatina");
+        title.add("nai");
+        title.add("nyeri");
+    }
+    //onMapReady
+
+    @Override
+    public void onMapReady(GoogleMap googleMap){
+        map = googleMap;
+
+        enableLocation();
+        for (int i=0; i<arrayList.size();i++){
+            for (int j=0;j<title.size();j++){
+                //add title
+                map.addMarker(new MarkerOptions().position(arrayList.get(i)).title(String.valueOf(title.get(j))));
+
+            }
+           // map.addMarker(new MarkerOptions().position(arrayList.get(i)).title("marker"));
+
+            // Add a marker in nyeri
+
+            // googleMap.addMarker(new MarkerOptions() .position(nyeri) .title("Kingongo") .snippet("23 max biking stations") .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE)) .alpha(0.7f));
+            map.animateCamera(CameraUpdateFactory.zoomTo(15));
+            map.moveCamera(CameraUpdateFactory.newLatLng(arrayList.get(i)));
         }
+        //onclick listener for markers
+        map.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+            @Override
+            public boolean onMarkerClick(Marker marker) {
+
+                String markerTitle = marker.getTitle();
+                Intent i = new Intent(homepage.this, Station_info.class);
+                //pass title
+                i.putExtra("title",markerTitle);
+                startActivity(i);
+                return false;
+            }
+        });
+
+    }
+    private void enableLocation() {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+            if (map!=null){
+                map.setMyLocationEnabled(true);
+            }
+        } else {
+            Toast.makeText(this, "Permission Denied", Toast.LENGTH_SHORT).show();
+            PermissionUtils.requestPermission(homepage.this, LOCATION_PERMISSION_REQUEST_CODE, Manifest.permission.ACCESS_FINE_LOCATION, true);
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        if (requestCode != LOCATION_PERMISSION_REQUEST_CODE) {
+            return;
+        }
+        if (PermissionUtils.isPermissionGranted(permissions, grantResults, Manifest.permission.ACCESS_FINE_LOCATION)) {
+            // Enable the my location layer if the permission has been granted.
+            enableLocation();
+        } else {
+            // Permission was denied. Display an error message // [START_EXCLUDE] // Display the missing permission error dialog when the fragments resume.
+            permissionDenied = true;
+            // [END_EXCLUDE]
+        }
+    }
+    @Override
+    protected void onResumeFragments() {
+        super.onResumeFragments();
+        if (permissionDenied) {
+            // Permission was not granted, display error dialog.
+            showMissingPermissionError();
+            permissionDenied = false;
+        }
+    } /** * Displays a dialog with error message explaining that the location permission is missing. */
+    private void showMissingPermissionError() {
+        PermissionUtils.PermissionDeniedDialog .newInstance(true).show(getSupportFragmentManager(), "dialog");
+    }
+    @Override
+    public void onPointerCaptureChanged(boolean hasCapture)
+    {
+
+    }
+
+
     public void ClickMenu(View view){
         openDrawer(drawerLayout);
     }
 
-    
+
     public static void openDrawer(DrawerLayout drawerLayout) {
         drawerLayout.openDrawer(GravityCompat.START);
     }
@@ -83,7 +201,7 @@ public class homepage extends FragmentActivity implements OnMapReadyCallback{
         redirectActivity(this, dashboard.class);
     }
     public void ClickAboutus(View view){
-        redirectActivity(this,aboutus.class);
+        redirectActivity(this, aboutus.class);
     }
     public void ClickLogout(View view){
         logout(this);

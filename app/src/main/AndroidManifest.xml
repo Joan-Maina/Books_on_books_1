@@ -13,15 +13,22 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.MyApplicationBicycles">
-        <activity android:name=".stations"></activity>
-        <activity android:name=".aboutus" />
-        <activity android:name=".dashboard" />
-        <activity android:name=".splashing" />
+        <activity android:name=".admin1"></activity>
+        <activity android:name=".registerAdmin" />
+        <activity android:name=".MainActivity2" />
+        <activity android:name=".Booking" />
+        <activity android:name=".Station_info" />
 
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/map_key" />
 
+        <activity android:name=".stations" />
+        <activity android:name=".aboutus" />
+        <activity android:name=".dashboard" />
         <activity android:name=".homepage" />
         <activity android:name=".register" />
         <activity android:name=".signin" />

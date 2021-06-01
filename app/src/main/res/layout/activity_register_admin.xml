@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/purple_200"
+    tools:context=".MainActivity">
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="500dp"
+        app:cardUseCompatPadding="true"
+        app:cardCornerRadius="12dp"
+
+        android:layout_centerInParent="true">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:text="Log in"
+                android:textStyle="bold"
+                android:textSize="26sp"
+                android:textColor="@color/black"
+                android:id="@+id/label"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_below="@+id/label"
+                android:layout_above="@+id/progressbar"
+                android:gravity="center_vertical"
+                >
+                <EditText
+
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/email"
+                    android:padding="8dp"
+                    android:background="@drawable/editbox"
+                    android:hint="Enter admin email"
+                    />
+
+                <EditText
+                    android:id="@+id/pswd"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:background="@drawable/editbox"
+                    android:padding="8dp"
+                    android:hint="Enter admin password"
+                    android:inputType="textPassword" />
+
+
+            </LinearLayout>
+            <ProgressBar
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:indeterminate="true"
+                android:id="@+id/progressbar"
+                android:layout_centerHorizontal="true"
+                android:layout_above="@+id/loginBtn"
+                android:visibility="invisible"
+                android:layout_margin="12dp"/>
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/loginBtn"
+                android:text="LOG IN"
+                android:layout_centerHorizontal="true"
+                android:layout_alignParentBottom="true"
+                android:background="@drawable/buttonstyle"
+                />
+
+
+        </RelativeLayout>
+    </androidx.cardview.widget.CardView>
+</RelativeLayout>
