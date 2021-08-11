@@ -11,18 +11,19 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
         <TextView
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="marker title"
+            android:text=""
+            android:textColor="@color/black"
             android:textStyle="bold"
-            android:textSize="60sp"
+            android:textSize="50dp"
             android:textAlignment="center"
             android:id="@+id/tryiing"
-            android:layout_gravity="center_horizontal" />
+            android:gravity="center_horizontal" />
         <ImageView
             android:layout_width="100dp"
             android:layout_height="100dp"
-            android:src="@drawable/ic_baseline_help_24"
+            android:src="@drawable/bike"
             android:id="@+id/img"
 
             />
@@ -55,6 +56,7 @@
                 android:layout_height="wrap_content"
                 android:text="spaces"
                 android:textSize="50dp"
+                android:padding="15dp"
                 android:textColor="@color/black"
                 android:background="@color/white"
                 android:id="@+id/no_space"

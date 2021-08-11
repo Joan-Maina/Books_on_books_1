@@ -18,6 +18,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 public class signin extends AppCompatActivity {
 
@@ -26,11 +27,13 @@ public class signin extends AppCompatActivity {
     Button login;
     FirebaseAuth firebaseAuth;
     ProgressDialog progressDialog;
+    FirebaseFirestore firebaseFirestore;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signin);
+       // getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         firebaseAuth = FirebaseAuth.getInstance();
         createnew = findViewById(R.id.textView3);
@@ -39,6 +42,7 @@ public class signin extends AppCompatActivity {
         password = findViewById(R.id.editTextTextPassword);
         login = findViewById(R.id.button2);
         progressDialog = new ProgressDialog(this);
+        firebaseFirestore = FirebaseFirestore.getInstance();
 
         //login button
         login.setOnClickListener(new View.OnClickListener() {
@@ -81,7 +85,9 @@ public class signin extends AppCompatActivity {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
                     if (task.isSuccessful()) {
+                        //checkUserAccessLevel();
                         if (firebaseAuth.getCurrentUser().isEmailVerified()){
+
                             Toast.makeText(signin.this, "Success!", Toast.LENGTH_SHORT).show();
                             Intent i = new Intent(signin.this, homepage.class);
                             startActivity(i);

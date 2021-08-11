@@ -28,6 +28,7 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -48,10 +49,14 @@ public class homepage extends FragmentActivity implements OnMapReadyCallback{
     private boolean permissionDenied = false;
     GoogleMap map;
     ArrayList<LatLng> arrayList=new ArrayList<LatLng>();
-    LatLng nai = new LatLng(-1.2921,36.8219);
+    LatLng nai = new LatLng(-0.412284,36.950513);
     LatLng muranga = new LatLng(-0.7839, 37.04);
     LatLng karatina = new LatLng(-0.4832, 37.1274);
     LatLng nyeri = new LatLng(-0.412284,36.950513);
+    LatLng nyeri1 = new LatLng(-0.413490,36.955249);
+    LatLng nyeri2 = new LatLng(-0.412284,36.945765);
+    LatLng nyeri3 = new LatLng(-0.419200,36.948663);
+    LatLng nyeri4 = new LatLng(-0.421277,36.950132);
     ArrayList<String> title= new ArrayList<String>();
 
     @Override
@@ -87,12 +92,23 @@ public class homepage extends FragmentActivity implements OnMapReadyCallback{
         arrayList.add(karatina);
         arrayList.add(nai);
         arrayList.add(nyeri);
+        arrayList.add(nyeri1);
+        arrayList.add(nyeri2);
+        arrayList.add(nyeri3);
+        arrayList.add(nyeri4);
+
 
         //adding titles
         title.add("muranga");
         title.add("karatina");
         title.add("nai");
         title.add("nyeri");
+        title.add("nyeri1");
+        title.add("nyeri2");
+        title.add("nyeri3");
+        title.add("nyeri4");
+
+
     }
     //onMapReady
 
@@ -198,7 +214,7 @@ public class homepage extends FragmentActivity implements OnMapReadyCallback{
         recreate();
     }
     public void ClickDashboard(View view){
-        redirectActivity(this, dashboard.class);
+        redirectActivity(this,stationsDisplay.class);
     }
     public void ClickAboutus(View view){
         redirectActivity(this, aboutus.class);
@@ -208,7 +224,7 @@ public class homepage extends FragmentActivity implements OnMapReadyCallback{
     }
 
     public void ClickMore(View view){
-        redirectActivity(this, stations.class);
+        redirectActivity(this, stationsDisplay.class);
     }
     public static void logout(final Activity activity) {
         //initialize alert dialogs

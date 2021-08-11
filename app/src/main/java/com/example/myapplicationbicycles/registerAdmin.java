@@ -61,6 +61,7 @@ public class registerAdmin extends AppCompatActivity {
         }
 
         pb.setVisibility(View.VISIBLE);
+
         auth.signInWithEmailAndPassword(email,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
@@ -68,7 +69,7 @@ public class registerAdmin extends AppCompatActivity {
                 if (task.isSuccessful()){
 
                     pb.setVisibility(View.VISIBLE);
-                    startActivity(new Intent(registerAdmin.this,MainActivity2.class));
+                    startActivity(new Intent(registerAdmin.this,adminInput.class));
                 }else {
                     Toast.makeText(registerAdmin.this,"err" +task.getException().getMessage(),Toast.LENGTH_SHORT).show();
                 }

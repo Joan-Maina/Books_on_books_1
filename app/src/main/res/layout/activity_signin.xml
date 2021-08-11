@@ -4,12 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/teal_200"
     tools:context=".signin">
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="500dp"
         app:cardUseCompatPadding="true"
         app:cardCornerRadius="12dp"
+
 
         android:layout_centerInParent="true">
         <RelativeLayout
@@ -40,6 +42,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
        android:padding="15dp"
+        android:layout_margin="8dp"
         android:background="@drawable/editbox"
         android:hint="please enter your email"
         android:inputType="textEmailAddress"
@@ -49,10 +52,23 @@
         android:id="@+id/editTextTextPassword"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:padding="15dp"
+        android:layout_margin="8dp"
         android:background="@drawable/editbox"
         android:hint="enter your password"
         android:inputType="textPassword"
        />
+
+                <TextView
+                    android:id="@+id/textView3"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_above="@+id/button2"
+                    android:text="don't have an account? sign in"
+                    android:textColor="@color/black"
+                    android:textSize="20sp"
+
+                    android:textStyle="bold" />
             </LinearLayout>
 
 
@@ -66,17 +82,7 @@
         android:background="@drawable/buttonstyle"
         />
 
-    <TextView
-        android:id="@+id/textView3"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        android:textColor="@color/black"
-        android:layout_above="@+id/button2"
 
-        android:text="don't have an account? sign in"
-        />
 </RelativeLayout>
     </androidx.cardview.widget.CardView>
 </RelativeLayout>

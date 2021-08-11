@@ -4,6 +4,9 @@ plugins {
 }
 
 android {
+    lintOptions {
+        disable 'RestrictedApi'
+    }
     compileSdkVersion 30
     buildToolsVersion "30.0.3"
 
@@ -13,6 +16,7 @@ android {
         targetSdkVersion 30
         versionCode 1
         versionName "1.0"
+        multiDexEnabled true
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -44,7 +48,14 @@ dependencies {
     implementation 'com.google.android.material:material:1.4.0-beta01'
     implementation 'androidx.navigation:navigation-runtime:2.3.5'
     implementation 'com.google.firebase:firebase-database:20.0.0'
+    implementation 'com.google.firebase:firebase-firestore:23.0.1'
     testImplementation 'junit:junit:4.+'
+    implementation 'com.paypal.sdk:paypal-android-sdk:2.15.3'
+    implementation 'com.firebaseui:firebase-ui-database:7.1.1'
+    implementation 'androidx.recyclerview:recyclerview:1.2.0'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
+    implementation 'com.android.support:multidex:1.0.3'
+    implementation 'com.google.firebase:firebase-core:19.0.0'
+    implementation 'com.google.firebase:firebase-auth:21.0.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
 }
